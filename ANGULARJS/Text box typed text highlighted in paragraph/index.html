@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <title>Text box typed text highlighted in paragraph</title>
+    <script src="libs/angular.min-1-4-7.js"></script>
+    <script src="js/module/module.js"></script>
+    <script src="js/controller/myController.js"></script>
+    <script src="js/filter/filter.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Text box typed text highlighted in paragraph</h1>
+        <br>
+        <div ng-controller="myController">
+            <input class="col-sm-6" type="text " placeholder="Enter your searched text here" ng-model="searchText ">
+            <br>
+            <br>
+            <div class="col-sm-6" ng-repeat="item in data | filter:searchText " ng-bind-html="item.text | highlightSearchedText:searchText ">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

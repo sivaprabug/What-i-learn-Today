@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JavaScript Call()</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    var fruits = {
+        packingCharge: 10
+    };
+
+    var veg = {
+        packingCharge: 20
+    };
+
+    var priceTotal = function(carrot, beans, guva, mango) {
+        return totalPrice = this.packingCharge + carrot + beans + guva + mango;
+    }
+
+    var result = priceTotal.call(fruits, 10, 10, 10, 10, 20);
+    //functionName.call(object,functionArguments)
+    console.log(result);
+
+    var arr = [20, 20, 20, 20, 10, 10];
+    var result = priceTotal.apply(veg, arr);
+    //functionName.apply(object,functionArgumentsARRAY)
+    console.log(result);
+
+    var result = priceTotal.bind(veg, arr);
+    //functionName.bind(object,functionArgumentsARRAY)
+    console.log(result);
+
+
+    var result = priceTotal.bind(veg);
+    console.dir(result);
+
+    console.log(result(30, 30, 30, 30));
+    </script>
+</body>
+
+</html>

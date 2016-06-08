@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <script type="text/javascript">
+    function reverse(s) {
+        var o = [];
+        for (var i = s.length - 1, j = 0; i >= 0; i--, j++) {
+            document.write("i => " + i + "<br>");
+            document.write("j => " + j + "<br>");
+            o[j] = s[i];
+            // document.write(o + "<br>");
+            // o.join('');
+            // document.write(s + "<br>");
+        }
+        document.write(o + "<br>");
+        o.join('');
+        document.write(s + "<br>");
+
+    }
+    </script>
+    <script type="text/javascript">
+    reverse('Sivaprabu')
+    </script>
+</body>
+
+</html>
