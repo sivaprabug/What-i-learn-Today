@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Getting all filenames in a directory with jQuery</title>
+    <script type="text/javascript" src="libs/jquery-1-12-4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap-3-3-6.min.css">
+</head>
+
+<body>
+    <script>
+    $.ajax({
+        url: "../Get list of Files inside the folder/",
+        success: function(data) {
+            var myFileName = [];
+
+            function filterExtension(fileList) {
+                ext = fileList.substring(fileList.lastIndexOf('.') + 1);
+                if (ext == "txt" || ext == "gif") {
+                    myFileName = fileList;
+                    $('#appendFileNames').append(myFileName + '<br>');
+                }
+            }
+            $(data).find("td > a").each(function() {
+                filterExtension($(this).attr("href"));
+            });
+        }
+    });
+    </script>
+    <div class="container">
+        <div id="appendFileNames"></div>
+    </div>
+</body>
+
+</html>
