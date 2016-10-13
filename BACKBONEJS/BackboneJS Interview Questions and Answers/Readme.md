@@ -312,3 +312,446 @@ toJSON is used for persistence, serialization and for augmentation before being 
 ### 50.What is Backbone.sync?
 
 When Backbone wants to save or read a model to the server it calls out a function called as Backbone.sync
+
+
+###51. What is Backbone.js? How Does It Help Developers?
+
+BackboneJs is a JavaScript framework which allows the developers to make their life easier by providing the below features:
+
+* Model – Store data
+	1.Model can have listeners bound to them to detect changes to their values
+* Collection – Group of models
+* View – Represents UI
+* Routing – Manages how to show appropriate view when request through URL
+
+###52 What is Model in Backbone.js?
+
+Models are used to represent data from your server. Model in BackboneJs contains:
+
+* Interactive data
+* Business Logic
+* Conversions
+* Validations
+* Computed properties
+* Access control
+
+Code Example:-
+
+	MyClass = Backbone.Model.extend({
+	        initialize: function(){
+	            alert("I will initialize the model when it is created. I am like constructor.");
+	        }
+	    });
+	var myObj = new MyClass();
+
+
+###53. How Can You Set Attributes of a Model?
+
+You can set attributes of a model in two ways. Using constructor parameter or .set(). See the below example:
+
+	var myObj = new MyClass({ attrib1: "Thomas", attrib2: 67});
+
+	//Or we can set afterwards, these operations are equivalent
+	var myObj = new MyClass();
+	myObj.set({ attrib1: "Thomas", attrib2: 67});
+
+###54. How Can You Get the Attribute Value of a Model?
+
+You can get the value of model attribute by using .get() method. See the example below:
+
+	//Set attributes
+	var obj = new MyClass({ attrib1: "Attribute1", attrib2: 50});
+
+	//Get attributes
+	var attrib1 = obj.get("name"); // "Attribute1"
+	var attrib2 = obj.get("age"); // 50
+
+###55. Can You Have Default Values for Model? If Yes, How?
+
+Yes, we can set default values for the model attributes. See the example below:
+
+	MyClass = Backbone.Model.extend({
+	        defaults: { //sets default values
+	            attrib1: 'Default Attribute1 Value',
+	            attrib2: 0
+	        },
+	        initialize: function(){
+	            alert("It is so easy to set default values. Isn't it?");
+	        }
+	    });
+
+###56. How Can You Write the Business Logic in Model?
+
+We can write the methods which contain the business logic. See the example below:
+
+
+	Person = Backbone.Model.extend({
+	        defaults: {
+	            name: 'Fetus',
+	            age: 0,
+	            child: ''
+	        },
+	        initialize: function(){
+	            alert("This class has adop() method which contains business logic to set new child.");
+	        },
+	        adopt: function( newChildsName ){
+	            this.set({ child: newChildsName });
+	        }
+	    });
+
+	var person = new Person({ name: "Thomas", age: 67, child: 'Ryan'});
+	person.adopt('John Resig');
+	 var child = person.get("child"); // 'John Resig'
+
+###57. How Can You Track Any Change in Model Attribute Value?
+
+All attributes of a model can have listeners bound to them to detect changes to their values. In our initialize function, we are going to bind a function call everytime we change the value of our attribute. In this case, if the name of our “person” changes, we will alert their new name. Syntax for attaching callback to change event of attribute is this.on(“change”, function(model){});. See the example below:
+
+	Person = Backbone.Model.extend({
+	        defaults: {
+	            name: 'Fetus',
+	            age: 0
+	        },
+	        initialize: function(){
+	            alert("Below we are attaching callback to change event of 'name' attribute");
+	            this.on("change:name", function(model){
+	                var name = model.get("name"); // 'Stewie Griffin'
+	                alert("Changed my name to " + name );
+	            });
+	        }
+	    });
+
+    var person = new Person({ name: "Thomas", age: 67});
+    person.set({name: 'Stewie Griffin'}); // This triggers a change and will alert()
+
+###58. How the Actions Performed on Model is Translated to RESTful Operations? Give an Example.
+
+Models are used to represent data from your server and actions you perform on them will be translated to RESTful operations. The id attribute of a model identifies how to find it on the database usually mapping to the surrogate key.
+
+Suppose you have a table Users with columns id, name, email and you want to save the model back on server when user clicks save button. If the id attribute of the model is null, Backbone.js will send a POST request to the urlRoot of the server. For this, see the example below:
+
+
+	var UserModel = Backbone.Model.extend({
+	        urlRoot: '/user', //RESTful API relative path
+	        defaults: {
+	            name: '',
+	            email: ''
+	        }
+	    });
+	    var user = new UserModel();
+	    // Notice that we haven't set an `id`. In case of update operation, we need to pass 'id' as well.
+	    var userDetails = {
+	        name: 'Thomas',
+	        email: 'youemailid@domain.com'
+	    };
+	    // Because we have not set a `id` the server will call
+	    // POST /user with a payload of {name:'Thomas', email: 'youremailid@domain.com'}
+	    // The server should save the data and return a response containing the new `id`
+	    user.save(userDetails, {
+	        success: function (user) {
+	            alert(user.toJSON());
+	        }
+	    })
+
+###59.How Backbone Decides if it Should Use POST/GET/ Request to the Server? What are the Methods Backbone has Reserved for these Operations?
+
+* If we instantiate a model with an id, Backbone.js will automatically perform a GET request to the urlRoot + ‘/id’ using fetch() method. (conforming to RESTful conventions)
+
+* If the id attribute of the model is null, Backbone.js will send a POST request to the urlRoot of the server using save() method.
+
+* If the id attribute of the model is not null, Backbone.js will send a PUT request instead of a POST request using save() method.
+
+* If a model has an id we know that it exists on the server, so if we wish to remove it from the server we can call destroy() method. destroy will fire off a DELETE /user/id (conforming to RESTful conventions).
+
+See the example below for all these above operations:
+
+	// Here we have set only the `id` of the model so it will call fetch() method.
+	    var user = new Usermodel({id: 1});
+
+	    // The fetch below will perform GET /user/1
+	    // The server should return the id, name and email from the database
+	    user.fetch({
+	        success: function (user) {
+	            alert(user.toJSON());
+	        }
+	    })
+
+
+
+	// Here we have set all the attributes, along with id,
+	// of the model so it will call save() method with PUT
+	    var user = new Usermodel({
+	        id: 1,
+	        name: 'Thomas',
+	        email: 'myemailid@domain.com'
+	    });
+
+	    // Let's change the name and update the server
+	    // Because there is `id` present, Backbone.js will fire
+	    // PUT /user/1 with a payload of `{name: 'Davis', email: 'myemailid@domain.com'}`
+	    user.save({name: 'Davis'}, {
+	        success: function (model) {
+	            alert(user.toJSON());
+	        }
+	    });
+
+
+	// Here we have set all the properties of model.
+	    var user = new Usermodel({
+	        id: 1,
+	        name: 'Thomas',
+	        email: 'thomasalwyndavis@gmail.com'
+	    });
+
+	    // Because there is `id` present, Backbone.js will fire
+	    // DELETE /user/1
+	    user.destroy({
+	        success: function () {
+	            alert('Destroyed');
+	        }
+	    });
+
+###60. What are the Tips/Tricks/Practice, with Respect to Model, You Follow?
+
+Below are some practices you should follow while working with Backbone models:
+
+***Get all the Current Attributes***
+
+obj.attributes gives a direct reference to the attributes and you should be careful when playing with it. Best practice would suggest that you use .set() to edit attributes of a model to take advantage of backbone listeners.
+
+	var person = new Person({ name: "Thomas", age: 67});
+	var attributes = person.toJSON(); // { name: "Thomas", age: 67}
+	/* This simply returns a copy of the current attributes. */
+
+	var attributes = person.attributes;
+
+***Validate Data Before You Set or Save It***
+
+Always implement validate() method so that Backbone validates the input before setting any attribute value. It ensures that invalid data is not stored on your server.
+
+	Person = Backbone.Model.extend({
+	        // If you return a string from the validate function,Backbone will throw an error
+	        validate: function( attributes ){
+	            if( attributes.age < 0 && attributes.name != "Dr Manhatten" ){
+	                return "You can't be negative years old";
+	            }
+	        },
+	        initialize: function(){
+	            //Bind callback for error event
+	            this.bind("error", function(model, error){
+	                // We have received an error, log it, alert it or forget it <img alt=":)" class="wp-smiley" src="http://synvistech.com/blogs/wp-includes/images/smilies/simple-smile.png" style="height: 1em; max-height: 1em;" />
+	                alert( error );
+	            });
+	        }
+	    });
+
+	    var person = new Person;
+	    person.set({ name: "Mary Poppins", age: -1 });
+	    // Will trigger an alert outputting the error
+
+	    var person = new Person;
+	    person.set({ name: "Dr Manhatten", age: -1 });
+
+Note: Dear readers, please let me know if you follow some other best practices so that I can add it.
+
+###61. What is View in Backbone.js?
+
+1. Reflect what your applications’ data models look like.
+2. Used to listen to events and react accordingly.
+
+###62. How Do You Define View in Backbone.js?
+
+You can define views in Backbone.js similar to Backbone models. See example below:
+
+	SearchView = Backbone.View.extend({
+	        initialize: function(){
+	            alert("WOW! SearchView has been defined.");
+	        }
+	    });
+
+	    // The initialize function is always called when instantiating a Backbone View.
+	    // Consider it the constructor of the class.
+	    var search_view = new SearchView();
+	    //You can specify el property for the view or else it will create empty div and assign it
+	<div id="search_container"></div>
+
+###63. What is “el” Property of Backbone.js View?
+
+The “el” property references the DOM object created in the browser. Every Backbone.js view has an “el” property, and if it is not defined, Backbone.js will construct its own, which is an empty div element.
+
+###64. How Can You Use Underscore Templates in Backbone.js Views?
+
+* First, create an underscore template
+* Create div for el property of the view
+* Compile the template using underscore
+* Load the compiled HTML into Backbone “el”
+
+See the below example:
+
+	<script type="text/template" id="search_template">
+	  <label>Search</label>
+
+###65. How Can You Attach Listeners to Events in a View?
+
+Use the “events” attribute of Backbone.View. Remember that event listeners can only be attached to child elements of the “el” property.
+
+See example below:
+
+	SearchView = Backbone.View.extend({
+	    initialize: function(){
+	        this.render();
+	    },
+	    render: function(){
+	        var template = _.template( $("#search_template").html(), {} );
+	        this.$el.html( template );
+	    },
+	    //Attach listener to click event of the search button
+	    events: {
+	        "click input[type=button]": "doSearch"
+	    },
+	    doSearch: function( event ){
+	        // Button clicked, you can access the element that was clicked with event.currentTarget
+	        alert( "Search for " + $("#search_input").val() );
+	    }
+	});
+
+###67. How Can You Use Template Variables?
+You can access template variables with <%= %>.
+
+	<script type="text/template" id="search_template">
+	<label><%= search_label %>
+
+###68. What is Router in Backbone.js?
+
+Backbone routers are used for routing your applications URLs when using hash tags(#). In the traditional MVC sense, they don’t necessarily fit the semantics and if you have read “What is a view?” it will elaborate on this point. Though a Backbone “router” is still very useful for any application/feature that needs URL routing/history capabilities.
+
+* Defined routers should always contain at least one route and a function to map the particular route to.
+
+* Routes interpret anything after “#” tag in the URL. All links in your application should target “#/action” or “#action”. (Appending a forward slash after the hashtag looks a bit nicer, e.g. http://example.com/#/user/help).
+
+Code:
+
+	<script>
+	    var AppRouter = Backbone.Router.extend({
+	        routes: {
+	            "*actions": "defaultRoute" // matches http://example.com/#anything-here
+	        }
+	    });
+	    // Initiate the router
+	    var app_router = new AppRouter;
+
+	    app_router.on('route:defaultRoute', function(actions) {
+	        alert(actions);
+	    })
+
+	    // Start Backbone history a necessary step for bookmarkable URL's
+	    Backbone.history.start();
+
+	</script>
+
+
+###69. What is Dynamic Routing?
+
+In case of Dynamic Routing, you can use variables in the route. For example, you might want to retrieve a post with a variable id with a friendly URL string. You can specify variable name in the route as :variablename in dynamic routing.
+
+	<script>
+	    var AppRouter = Backbone.Router.extend({
+	        routes: {
+	            "posts/:id": "getPost",
+	            "*actions": "defaultRoute" // Backbone will try to match the route above first
+	        }
+	    });
+	    // Instantiate the router
+	    var app_router = new AppRouter;
+	    app_router.on('route:getPost', function (id) {
+	        // Note the variable in the route definition being passed in here
+	        alert( "Get post number " + id );
+	    });
+	    app_router.on('route:defaultRoute', function (actions) {
+	        alert( actions );
+	    });
+	    // Start Backbone history a necessary step for bookmarkable URL's
+	    Backbone.history.start();
+
+	</script>
+
+###70. What are “:params” and “*splats” in Dynamic Routing?
+
+Backbone uses two styles of variables when implementing routes:
+
+* “:params” match any URL components between slashes. You can specify single fragment using “.params”
+* “*splats” match any number of URL fragments after the query.
+* Note that due to the nature of a “*splat”, it will always be the last variable in your URL as it will match any and all * components.
+* “*splats” or “:params” in route definitions are passed as arguments (in respective order) to the associated function.
+* A route defined as “/:route/:action” will pass 2 variables (“route” and “action”) to the callback function.
+
+Just to refresh the URL components with example, refer to the below example URL:
+
+
+	foo://example.com:8042/over/there?name=ferret#nose
+	  \_/   \_________/ \__/\_________/\__________/ \__/
+	   |         |        |     |           |        |
+	scheme      host    port   path       query   fragment
+
+The below example will help clear your understanding about use of “.params” and “*splats”:
+
+	routes: {
+	            "posts/:id": "getPost",
+	            // &lt;a href="http://example.com/#/posts/121">Example&lt;/a>
+
+	            "download/*path": "downloadFile",
+	            // &lt;a href="http://example.com/#/download/user/images/hey.gif">Download&lt;/a>
+
+	            ":route/:action": "loadView",
+	            // &lt;a href="http://example.com/#/dashboard/graph">Load Route/Action View&lt;/a>
+	        },
+
+	        app_router.on('route:getPost', function( id ){
+	            alert(id); // 121
+	        });
+	        app_router.on('route:downloadFile', function( path ){
+	            alert(path); // user/images/hey.gif
+	        });
+	        app_router.on('route:loadView', function( route, action ){
+	            alert(route + "_" + action); // dashboard_graph
+	        });
+
+###71. What is Collection in Backbone.js?
+
+* Backbone collections are simply an ordered set of models.
+* Typically, your collection will only use one type of model but models themselves are not limited to a type of collection.
+
+code:-
+
+	var Song = Backbone.Model.extend({
+	      initialize: function(){
+	          console.log("Music is the answer");
+	      }
+	  });
+
+	  var Album = Backbone.Collection.extend({
+	    model: Song
+	  });
+
+###72. Can You Give An Example of How to Build a Collection?
+
+	var Song = Backbone.Model.extend({
+	        defaults: {
+	            name: "Not specified",
+	            artist: "Not specified"
+	        },
+	        initialize: function(){
+	            console.log("Music is the answer");
+	        }
+	    });
+
+	    var Album = Backbone.Collection.extend({
+	        model: Song
+	    });
+
+	    var song1 = new Song({ name: "How Bizarre", artist: "OMC" });
+	    var song2 = new Song({ name: "Sexual Healing", artist: "Marvin Gaye" });
+	    var song3 = new Song({ name: "Talk It Over In Bed", artist: "OMC" });
+
+	    var myAlbum = new Album([ song1, song2, song3]);
+	    console.log( myAlbum.models ); // [song1, song2, song3]
