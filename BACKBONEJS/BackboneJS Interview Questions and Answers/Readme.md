@@ -218,7 +218,7 @@ setElement function is used when Backbone view has to be applied to a different 
 
 Model.cid works as a unique identifier. It is a special property of models, the cid or client id is automatically assigned to all models when they are first created. This property is useful when the model is not saved to the server, but needs to be visible in the UI. It takes the from c1,c2….
 
-###13. What are the three js files that you require to setup a working environment for backbone?
+###33. What are the three js files that you require to setup a working environment for backbone?
 
 you are required following three js files to setup a working environment for backbone
 
@@ -227,3 +227,88 @@ you are required following three js files to setup a working environment for bac
 * Underscore
 
 In your application put these files within js folder and use it in your index.html page
+
+### 34.What is backbone Js?
+
+It is JavaScript framework which helps to write the code in organize way and reduce the development time by providing lot of inbuilt functions. It also support MVC (Model, View, Controller). Its data binding framework.
+
+### 35.What is initial release date of backbone JS?
+
+October 13, 2010
+
+### 36.What is current Stable Version and Release date?
+
+1.3.2 / March 12, 2016
+
+
+### 37.In which language, backbone JS is writeen?
+
+javaScript
+
+### 38.What is offical URL of Backbone JS?
+
+http://backbonejs.org/
+
+### 39.What are main components of Backbone Js?
+
+* Model
+* View
+* controller
+* Router
+* Event class object
+
+### 40.What is Model in Backbone JS?
+
+We use Model for retrieves the data from server.
+
+### 41.What is View in Backbone JS?
+
+We use View for representation of HTML.
+
+
+### 42.What is controller in Backbone JS?
+
+We use controller for writing application logic.
+
+
+### 43.What is Collection in Backbone JS?
+
+Set of models are represented by collections.
+
+### 44.What is Router in Backbone JS?
+
+application want to change their URL fragment.
+
+### 45.What is Model in Event class object JS?
+
+events is a module that can be mixed in to any object.
+
+### 46.What are the three js files that you require to setup backbone Js?
+
+* jQuery
+* Backbone
+* Underscore
+
+### 47.What is the function of toJSON?
+
+toJSON is used for persistence, serialization and for augmentation before being sent to the server
+
+### 48.What are the configuration options available?
+
+* InitialCopyDirection
+* modelSetOptions
+* change Triggers
+* boundAttribute
+* suppressThrows
+* converter
+
+### 49.What are the keypoints of Backbone?
+
+* It has hard dependency with underscore.js to make it more functional and supporting.
+* With jQuery it has a soft dependency.
+* When the model changes it can update the HTML of your application automatically.
+* Significantly clean and elegant way for DOM manipulations and UI updates
+
+### 50.What is Backbone.sync?
+
+When Backbone wants to save or read a model to the server it calls out a function called as Backbone.sync
