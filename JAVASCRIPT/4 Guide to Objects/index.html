@@ -14,7 +14,8 @@
 
     var person = {
         name: 'Pranav Sivaprabu',
-        age: 3
+        age: 3,
+        doSomething: tests
     }
     console.log('person', person);
     console.log("");
@@ -22,21 +23,21 @@
     console.log(person['age']);
 
     var sayHello = function() {
-        alert('Hello');
+        console.info('sayHello');
+
     }
     sayHello();
 
     var test = function(name, age) {
         console.log("My name is " + name + " and my age is " + age + " years old");
     }
-    test(name,age);
+    test(name, age);
 
 
-    var tests = function(person) {
-        console.warn("My name is " + person.name + " and my age is " + person.age + " years old");
+    var tests = function() {
+        console.warn("My name is " + this.name + " and my age is " + this.age + " years old");
     }
     tests(person);
-
     </script>
 </body>
 
