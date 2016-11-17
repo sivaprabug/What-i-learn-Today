@@ -7,37 +7,25 @@
 
 <body>
     <script type="text/javascript">
-    var name = 'Pranav Sivaprabu';
-    console.log('name', name);
-    var age = 3;
-    console.log('age', age);
-
-    var person = {
+    var pranav = {
         name: 'Pranav Sivaprabu',
-        age: 3,
-        doSomething: tests
+        age: 3
+    };
+
+    var sivaprabu = {
+        name: 'Sivaprabu Ganesan',
+        age: 34
+    };
+
+    pranav.sayHello = function() {
+        console.log('Hi i am ' + this.name);
     }
-    console.log('person', person);
-    console.log("");
-    console.log(person['name']);
-    console.log(person['age']);
 
-    var sayHello = function() {
-        console.info('sayHello');
+    pranav.sayHello();
 
-    }
-    sayHello();
+    sivaprabu.sayHello = pranav.sayHello;
 
-    var test = function(name, age) {
-        console.log("My name is " + name + " and my age is " + age + " years old");
-    }
-    test(name, age);
-
-
-    var tests = function() {
-        console.warn("My name is " + this.name + " and my age is " + this.age + " years old");
-    }
-    tests(person);
+    sivaprabu.sayHello();
     </script>
 </body>
 
