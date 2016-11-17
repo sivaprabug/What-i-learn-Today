@@ -7,6 +7,35 @@
 
 <body>
     <script type="text/javascript">
+    var name = 'Pranav Sivaprabu';
+    console.log('name', name);
+    var age = 3;
+    console.log('age', age);
+
+    var person = {
+        name: 'Pranav Sivaprabu',
+        age: 3
+    }
+    console.log('person', person);
+    console.log("");
+    console.log(person['name']);
+    console.log(person['age']);
+
+    var sayHello = function() {
+        alert('Hello');
+    }
+    sayHello();
+
+    var test = function(name, age) {
+        console.log("My name is " + name + " and my age is " + age + " years old");
+    }
+    test(name,age);
+
+
+    var tests = function(person) {
+        console.warn("My name is " + person.name + " and my age is " + person.age + " years old");
+    }
+    tests(person);
 
     </script>
 </body>

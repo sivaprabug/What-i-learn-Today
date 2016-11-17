@@ -5,7 +5,7 @@
 	+ [Reverse the given string](https://github.com/gsivaprabu/What-i-learn-Today/tree/master/JAVASCRIPT/Reverse%20the%20given%20string)
 	+ [Splice Concept in Javascript](https://github.com/gsivaprabu/)
 	+ [Three Ways to Title Case a Sentence](https://github.com/gsivaprabu/What-i-learn-Today/tree/master/JAVASCRIPT/Three%20Ways%20to%20Title%20Case%20a%20Sentence)
-	+ [Guide to Objects](https://github.com/gsivaprabu/What-i-learn-Today/tree/master/JAVASCRIPT/Three%20Ways%20to%20Title%20Case%20a%20Sentence)
+	+ [Guide to Objects](https://github.com/gsivaprabu/What-i-learn-Today/tree/master/JAVASCRIPT/Guide%20to%20Objects)
 
 + AngularJS
  + [Text box typed text highlighted in paragraph](https://github.com/gsivaprabu/What-i-learn-Today/tree/master/ANGULARJS/Text%20box%20typed%20text%20highlighted%20in%20paragraph)
