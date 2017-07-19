@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>Alternative table row color using javascript.</title>
+    <script language="javascript">
+    function setcolor() {
+        var tbl = document.getElementById("tblCountry");
+        tbl.style.color = "white";
+        tbl.rows[0].style.backgroundColor = "green";
+        for (var i = 1; i < tbl.rows.length; i++) {
+            if (i % 2 == 0)
+                tbl.rows[i].style.backgroundColor = "gray";
+            else
+                tbl.rows[i].style.backgroundColor = "brown";
+        }
+    }
+    </script>
+</head>
+
+<body onload="setcolor();">
+    <table align="center" width="300px" id="tblCountry">
+        <tr>
+            <th>
+                Country
+            </th>
+        </tr>
+        <tr>
+            <td>
+                Australia
+            </td>
+        </tr>
+        <tr>
+            <td>
+                China
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Denmark
+            </td>
+        </tr>
+        <tr>
+            <td>
+                India
+            </td>
+        </tr>
+        <tr>
+            <td>
+                USA
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
