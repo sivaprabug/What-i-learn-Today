@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Test JS</title>
+</head>
+
+<body>
+    <script src="prototype.js"></script>
+    <script type="text/javascript">
+
+        function ajaxCall() {
+            ajax_url = "http://localhost/test/long.php"; // 5 Seconds delay call in backend
+            console.log("date", new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1"));
+            var ajax_req = new Ajax.Request(ajax_url, {
+                method: 'GET',
+                asynchronous: false,
+                contentType: "application/json",
+                onComplete: onCompleteCall,
+                timeout: 5000, //5 Seconds
+                ontimeout: onCGIRequestTimeoutCall
+            });
+
+        }
+
+        function onCompleteCall() {
+            console.log("onComplete Successfully called ==>", new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1"));
+        }
+        function onCGIRequestTimeoutCall() {
+            console.log("onCGIRequestTimeoutCall successfully called ==>", new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1"));
+        }
+
+    </script>
+
+    <button onclick="ajaxCall()">Click me</button>
+</body>
+
+</html>
